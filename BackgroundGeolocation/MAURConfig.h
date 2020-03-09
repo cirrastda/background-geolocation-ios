@@ -3,6 +3,7 @@
 //  BackgroundGeolocation
 //
 //  Created by Marian Hello on 11/06/16.
+//  Changed by Anderson Matuchenko to configure Other Notification Centers in 09/03/2020
 //
 
 #ifndef MAURConfig_h
@@ -23,6 +24,7 @@ enum {
 @property NSNumber *distanceFilter;
 @property NSNumber *desiredAccuracy;
 @property NSNumber *_debug;
+@property NSNumber *_useNotification;
 @property NSString *activityType;
 @property NSNumber *activitiesInterval;
 @property NSNumber *_stopOnTerminate;
@@ -45,6 +47,7 @@ enum {
 - (BOOL) hasDistanceFilter;
 - (BOOL) hasDesiredAccuracy;
 - (BOOL) hasDebug;
+- (BOOL) hasUseNotification;
 - (BOOL) hasActivityType;
 - (BOOL) hasStopOnTerminate;
 - (BOOL) hasUrl;
@@ -60,6 +63,7 @@ enum {
 - (BOOL) hasTemplate;
 - (BOOL) hasActivitiesInterval;
 - (BOOL) isDebugging;
+- (BOOL) useNotification;
 - (BOOL) stopOnTerminate;
 - (BOOL) saveBatteryOnBackground;
 - (BOOL) pauseLocationUpdates;

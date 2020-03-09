@@ -12,7 +12,7 @@
 
 @implementation MAURConfig 
 
-@synthesize stationaryRadius, distanceFilter, desiredAccuracy, _debug, activityType, activitiesInterval, _stopOnTerminate, url, syncUrl, syncThreshold, httpHeaders, _saveBatteryOnBackground, maxLocations, _pauseLocationUpdates, locationProvider, _template;
+@synthesize stationaryRadius, distanceFilter, desiredAccuracy, _debug, _useNotification, activityType, activitiesInterval, _stopOnTerminate, url, syncUrl, syncThreshold, httpHeaders, _saveBatteryOnBackground, maxLocations, _pauseLocationUpdates, locationProvider, _template;
 
 -(instancetype) initWithDefaults {
     self = [super init];
@@ -25,6 +25,7 @@
     distanceFilter = [NSNumber numberWithInt:500];
     desiredAccuracy = [NSNumber numberWithInt:100];
     _debug = [NSNumber numberWithBool:NO];
+    _useNotification = [NSNumber numberWithBool:YES];
     activityType = @"OtherNavigation";
     activitiesInterval = [NSNumber numberWithInt:10000];
     _stopOnTerminate = [NSNumber numberWithBool:YES];
@@ -53,6 +54,9 @@
     }
     if (isNotNull(config[@"debug"])) {
         instance._debug = config[@"debug"];
+    }
+    if (isNotNull(config[@"useNotification"])) {
+        instance._useNotification = config[@"useNotification"];
     }
     if (isNotNull(config[@"activityType"])) {
         instance.activityType = config[@"activityType"];
@@ -118,6 +122,9 @@
     if ([newConfig hasDebug]) {
         merger._debug = newConfig._debug;
     }
+    if ([newConfig hasUseNotification]) {
+        merger._useNotification = newConfig._useNotification;
+    }
     if ([newConfig hasActivityType]) {
         merger.activityType = newConfig.activityType;
     }
@@ -166,6 +173,7 @@
         copy.distanceFilter = distanceFilter;
         copy.desiredAccuracy = desiredAccuracy;
         copy._debug = _debug;
+        copy._useNotification = useNotification;
         copy.activityType = activityType;
         copy.activitiesInterval = activitiesInterval;
         copy._stopOnTerminate = _stopOnTerminate;
@@ -201,6 +209,11 @@
 - (BOOL) hasDebug
 {
     return _debug != nil;
+}
+
+- (BOOL) hasUseNotification
+{
+    return _useNotification != nil;
 }
 
 - (BOOL) hasActivityType
@@ -345,6 +358,11 @@
     return _debug.boolValue;
 }
 
+- (BOOL) useNotification
+{
+    return _useNotification.boolValue;
+}
+
 - (BOOL) stopOnTerminate
 {
     return _stopOnTerminate.boolValue;
@@ -465,6 +483,7 @@
     if ([self hasDistanceFilter]) [dict setObject:self.distanceFilter forKey:@"distanceFilter"];
     if ([self hasDesiredAccuracy]) [dict setObject:self.desiredAccuracy forKey:@"desiredAccuracy"];
     if ([self hasDebug]) [dict setObject:self._debug forKey:@"debug"];
+    if ([self hasUseNotification]) [dict setObject:self._debug forKey:@"useNotification"];
     if ([self hasStopOnTerminate]) [dict setObject:self._stopOnTerminate forKey:@"stopOnTerminate"];
     if ([self hasSyncThreshold]) [dict setObject:self.syncThreshold forKey:@"syncThreshold"];
     if ([self hasSaveBatteryOnBackground]) [dict setObject:self._saveBatteryOnBackground forKey:@"saveBatteryOnBackground"];
@@ -478,7 +497,7 @@
 
 - (NSString *) description
 {
-    return [NSString stringWithFormat:@"Config: distanceFilter=%@ stationaryRadius=%@ desiredAccuracy=%@ activityType=%@ activitiesInterval=%@ isDebugging=%@ stopOnTerminate=%@ url=%@ syncThreshold=%@ maxLocations=%@ httpHeaders=%@ pauseLocationUpdates=%@ saveBatteryOnBackground=%@ locationProvider=%@ postTemplate=%@", self.distanceFilter, self.stationaryRadius, self.desiredAccuracy, self.activityType, self.activitiesInterval, self._debug, self._stopOnTerminate, self.url, self.syncThreshold, self.maxLocations, self.httpHeaders, self._pauseLocationUpdates, self._saveBatteryOnBackground, self.locationProvider, self._template];
+    return [NSString stringWithFormat:@"Config: distanceFilter=%@ stationaryRadius=%@ desiredAccuracy=%@ activityType=%@ activitiesInterval=%@ isDebugging=%@ useNotification=%@ stopOnTerminate=%@ url=%@ syncThreshold=%@ maxLocations=%@ httpHeaders=%@ pauseLocationUpdates=%@ saveBatteryOnBackground=%@ locationProvider=%@ postTemplate=%@", self.distanceFilter, self.stationaryRadius, self.desiredAccuracy, self.activityType, self.activitiesInterval, self._debug, self._useNotification, self._stopOnTerminate, self.url, self.syncThreshold, self.maxLocations, self.httpHeaders, self._pauseLocationUpdates, self._saveBatteryOnBackground, self.locationProvider, self._template];
 
 }
 

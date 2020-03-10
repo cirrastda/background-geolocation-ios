@@ -203,6 +203,7 @@ static NSString *const Domain = @"com.marianhello";
 
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
+    //NSLog(@"locationManager didFailWithError %@",error);
     if (self.delegate && [self.delegate respondsToSelector:@selector(onError:)]) {
         NSDictionary *errorDictionary = @{
                                           NSUnderlyingErrorKey : error
